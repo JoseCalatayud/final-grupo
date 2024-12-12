@@ -1,13 +1,41 @@
 const apiUrl = "http://localhost:8080"; // Asegúrate de que la URL sea correcta
 
-// Función para iniciar el juego
-function IniciarJuego() {
-    const nombre = document.getElementById("tarea").value;
+let jugadores = [];
+let turnoActual = 0;
+
+// Función para agregar un jugador
+function agregarJugador() {
+    const nombre = document.getElementById("nombreJugador").value;
     if (!nombre) {
-        alert("Por favor, ingresa tu nombre.");
+        alert("Por favor, ingresa un nombre.");
         return;
     }
 
+    // Agregar el nombre a la lista de jugadores
+    jugadores.push(nombre);
+    actualizarListaJugadores();
+
+    // Enviar solicitud para iniciar el juego si es el primer jugador
+    if (jugadores.length === 1) {
+        iniciarJuego(nombre);
+    }
+
+    document.getElementById("nombreJugador").value = ''; // Limpiar campo de entrada
+}
+
+// Actualizar la lista de jugadores en la pantalla
+function actualizarListaJugadores() {
+    const lista = document.getElementById("jugadoresLista");
+    lista.innerHTML = '';
+    jugadores.forEach(jugador => {
+        const li = document.createElement("li");
+        li.textContent = jugador;
+        lista.appendChild(li);
+    });
+}
+
+// Función para iniciar el juego
+function iniciarJuego(nombre) {
     fetch(`${apiUrl}/iniciar`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -17,17 +45,14 @@ function IniciarJuego() {
             if (!response.ok) {
                 throw new Error(`Error: ${response.statusText}`);
             }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById("Frases").innerText = data;
+            document.getElementById("turnoJugador").innerText = nombre; // Mostrar turno actual
         })
         .catch(error => console.error("Error al iniciar el juego:", error));
 }
 
 // Función para lanzar un intento
-function LanzarIntento() {
-    const numero = document.getElementById("titulo").value;
+function lanzarIntento() {
+    const numero = document.getElementById("numeroIntento").value;
     if (!numero || isNaN(numero)) {
         alert("Por favor, ingresa un número válido.");
         return;
@@ -45,13 +70,14 @@ function LanzarIntento() {
             return response.text();
         })
         .then(data => {
-            document.getElementById("textoRespuestas").innerText = data;
+            document.getElementById("resultado").innerText = data;
+            actualizarTurno();
         })
         .catch(error => console.error("Error al realizar el intento:", error));
 }
 
-// Función para detener el juego (ejemplo básico)
-function DetenerJuego() {
-    // Aquí iría la lógica para detener el juego
-    alert("Juego detenido.");
+// Función para actualizar el turno actual
+function actualizarTurno() {
+    turnoActual = (turnoActual + 1) % jugadores.length; // Alternar entre los jugadores
+    document.getElementById("turnoJugador").innerText = jugadores[turnoActual];
 }
