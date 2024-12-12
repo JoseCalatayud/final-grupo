@@ -3,38 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adivinar El Número</title>
-    <link rel="stylesheet" href="css/style.css">
-    
+    <title>Adivina El Número</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .footer-content img {
+            max-width: 100px;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        #numeroEscondido, #textoRespuestas {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <!-- Cabecera con logo -->
-    <footer>
-        <div class="footer-content">
-            <img src="resources/logo.png" alt="Logo">
-            </a>
-        </div>
-    </footer>
+    <header class="bg-dark text-light text-center py-3">
+        <img src="resources/logo.png" alt="Logo" class="img-fluid">
+        <h1>Adivina El Número</h1>
+    </header>
 
     <!-- Adivina El Número -->
-    <div class="section" id="Adivina El Número">
-        <h2>Adivina El Número</h2>
-        <h3 id="tiempoRestante">¿Cuál es tu nombre?</h3>
-        <input type="text" id="tarea" placeholder="Ingresa tu nombre">
-        <button onclick="IniciarJuego()">Iniciar Juego</button>
-        <button onclick="DetenerJuego()">Detener Juego</button>
-    </div>
+    <main class="container my-5">
+        <!-- Sección de inicio -->
+        <div class="section text-center">
+            <h2 class="mb-4">Adivina El Número</h2>
+            <p class="mb-3" id="Frases">¿Cuál es tu nombre?</p>
+            <div class="input-group mb-4">
+                <input type="text" id="tarea" class="form-control" placeholder="Ingresa tu nombre">
+            </div>
+            <button class="btn btn-primary me-2" onclick="IniciarJuego()">Iniciar Juego</button>
+            <button class="btn btn-danger" onclick="DetenerJuego()">Detener Juego</button>
+        </div>
 
-    <!-- Sección de notas -->
-    <div class="section active" id="notas">
-        <h2>Escribe el número</h2>
-        <input type="hidden" id="idNota">
-        <input type="text" id="titulo" placeholder="Ingresa el número">
-        <button onclick="IniciarJuego()">Lanzar</button>
+        <!-- Sección de notas -->
+        <div class="section">
+            <h2 class="text-center">Escribe el número</h2>
+            <div class="input-group my-3">
+                <input type="hidden" id="idNota">
+                <input type="text" id="titulo" class="form-control" placeholder="Ingresa el número">
+                <button class="btn btn-success" onclick="IniciarJuego()">Lanzar</button>
+            </div>
+            <div id="numeroEscondido" class="alert alert-info text-center"></div>
+            <div id="textoRespuestas" class="alert alert-warning text-center"></div>
+        </div>
+    </main>
 
-        <div id="numeroEscondido"></div>
-        <div id="textoRespuestas"></div>
-    </div>
+    <!-- Pie de página -->
+    <footer class="bg-dark text-light text-center py-3">
+        <div class="footer-content">
+            <img src="resources/logo.png" alt="Logo" class="img-fluid">
+            <p class="mt-2">© 2024 Adivina El Número. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script src="javascript/index.js"></script>
 </body>
