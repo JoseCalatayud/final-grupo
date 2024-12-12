@@ -28,14 +28,16 @@ public class Juego {
     }
 
     public String evaluarNumero(int numero) {
-        String respuesta;
+        String respuesta="";
         if (numeroAleatorio > numero) {
             respuesta = "El numero es mayor";
         } else if (numeroAleatorio < numero) {
             respuesta = "El numero es menor";
+        } else if (numeroAleatorio == numero){
+            respuesta = "Has acertado";
         }
-        respuesta = "Enhorabuena, has acertado";
         return respuesta;
     }
 
+    
 }
