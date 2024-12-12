@@ -1,0 +1,44 @@
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinar El Número</title>
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+    <!-- Cabecera con logo -->
+    <footer>
+        <div class="footer-content">
+            <a href="https://macg-games.es" target="_blank">
+                <img src="resources/logo.png" alt="Logo">
+            </a>
+        </div>
+    </footer>
+
+    <!-- Adivina El Número -->
+    <div class="section" id="Adivina El Número">
+        <h2>Adivina El Número</h2>
+        <h3 id="tiempoRestante">¿Cuál es tu nombre?</h3>
+        <input type="text" id="tarea" placeholder="Ingresa tu nombre">
+        <button onclick="IniciarJuego()">Iniciar Juego</button>
+        <button onclick="DetenerJuego()">Detener Juego</button>
+    </div>
+
+    <!-- Sección de notas -->
+    <div class="section active" id="notas">
+        <h2>Escribe el número</h2>
+        <input type="hidden" id="idNota">
+        <input type="text" id="titulo" placeholder="Ingresa el número">
+        <button onclick="IniciarJuego()">Lanzar</button>
+
+        <div id="numeroEscondido"></div>
+        <div id="textoRespuestas"></div>
+    </div>
+
+    <script src="javascript/index.js"></script>
+</body>
+</html>
