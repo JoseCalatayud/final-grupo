@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 $(document).ready(function () {
     let nombre = '';
     let intentosMaximos = 0;
@@ -61,5 +60,4 @@ $(document).ready(function () {
         });
     });
 });
-=======
->>>>>>> origin/main
+
