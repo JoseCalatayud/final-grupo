@@ -1,83 +1,63 @@
-const apiUrl = "http://localhost:8080"; // Asegúrate de que la URL sea correcta
+$(document).ready(function () {
+    let nombre = '';
+    let intentosMaximos = 0;
 
-let jugadores = [];
-let turnoActual = 0;
+  
+    $('#Iniciar').click(function () {
+        nombre = $('#Nombre').val();
+        intentosMaximos = parseInt($('#Intentos').val(), 10);
 
-// Función para agregar un jugador
-function agregarJugador() {
-    const nombre = document.getElementById("nombreJugador").value;
-    if (!nombre) {
-        alert("Por favor, ingresa un nombre.");
-        return;
-    }
-
-    // Agregar el nombre a la lista de jugadores
-    jugadores.push(nombre);
-    actualizarListaJugadores();
-
-    // Enviar solicitud para iniciar el juego si es el primer jugador
-    if (jugadores.length === 1) {
-        iniciarJuego(nombre);
-    }
-
-    document.getElementById("nombreJugador").value = ''; // Limpiar campo de entrada
-}
-
-// Actualizar la lista de jugadores en la pantalla
-function actualizarListaJugadores() {
-    const lista = document.getElementById("jugadoresLista");
-    lista.innerHTML = '';
-    jugadores.forEach(jugador => {
-        const li = document.createElement("li");
-        li.textContent = jugador;
-        lista.appendChild(li);
+        $.ajax({
+            url: '',
+            type: 'POST',
+            data: ({ nombre: nombre, intentosMaximos: intentosMaximos }),
+            success: function (Iniciar) {
+                $('#Resultado').removeClass('alert-danger').addClass('alert-info').text(Iniciar.mensaje);
+            },
+            error: function (error) {
+               
+            }
+        });
     });
-}
 
-// Función para iniciar el juego
-function iniciarJuego(nombre) {
-    fetch(`${apiUrl}/iniciar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ nombre: nombre }),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+    
+    $('#Lanzar').click(function () {
+        const numero = parseInt($('#Numero').val(), 10);
+
+        if (!numero && numero !== 0) {
+            
+            return;
+        }
+
+        $.ajax({
+            url: '',
+            type: 'POST',            
+            data:({ numero: numero }),
+            success: function (Respuesta) {
+                $('#Resultado').removeClass('alert-danger').addClass('alert-info').text(Respuesta.mensaje);
+
+                
+            },
+            error: function (error) {
+               
             }
-            document.getElementById("turnoJugador").innerText = nombre; // Mostrar turno actual
-        })
-        .catch(error => console.error("Error al iniciar el juego:", error));
-}
+        });
+    });
 
-// Función para lanzar un intento
-function lanzarIntento() {
-    const numero = document.getElementById("numeroIntento").value;
-    if (!numero || isNaN(numero)) {
-        alert("Por favor, ingresa un número válido.");
-        return;
-    }
-
-    fetch(`${apiUrl}/intento`, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ numero: numero }),
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
+   
+    $('#Reiniciar').click(function () {
+        $.ajax({
+            url: '',
+            type: 'POST',
+            success: function (reiniciar) {
+                $('#Resultado').removeClass('alert-danger').addClass('alert-info').text(reiniciar.mensaje);
+                $('#Lanzar').prop('disabled', false);
+                $('#Numero').val('');
+            },
+            error: function (error) {
+               
             }
-            return response.text();
-        })
-        .then(data => {
-            document.getElementById("resultado").innerText = data;
-            actualizarTurno();
-        })
-        .catch(error => console.error("Error al realizar el intento:", error));
-}
+        });
+    });
+});
 
-// Función para actualizar el turno actual
-function actualizarTurno() {
-    turnoActual = (turnoActual + 1) % jugadores.length; // Alternar entre los jugadores
-    document.getElementById("turnoJugador").innerText = jugadores[turnoActual];
-}

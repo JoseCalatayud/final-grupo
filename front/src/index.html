@@ -1,60 +1,54 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Juego Multijugador: Adivina El Número</title>
+    <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-    </style>
 </head>
 <body>
-
     <header class="bg-dark text-light text-center py-3">
-        <h1>Adivina El Número - Juego Multijugador</h1>
+        <h1>Adivina El Número</h1>
     </header>
 
     <main class="container my-5">
         
-        <!-- Sección para agregar jugadores -->
+      
         <section class="section text-center">
-            <h2 class="mb-4">Adivina El Número - Agregar Jugadores</h2>
-            <p class="mb-3">Ingresa los nombres de los jugadores:</p>
+           
+            <p class="mb-3">Cual es tu nombre:</p>
+
             <div class="input-group mb-4">
-                <input type="text" id="nombreJugador" class="form-control" placeholder="Nombre del jugador">
+            <input type="text" id="Nombre" class="form-control" placeholder="Ingresa el nombre"> <input type="number" id="Intentos" class="form-control" placeholder=" Reglas Intentos Maximos">
+            
             </div>
-            <button class="btn btn-primary me-2" onclick="agregarJugador()">Agregar Jugador</button>
+            
+            <button id ="Iniciar" class="btn btn-primary me-2">IniciarJuego</button>
         </section>
 
-        <!-- Sección de juego -->
+       
         <section class="section">
-            <h2 class="text-center">Turno de: <span id="turnoJugador">Nadie</span></h2>
+            
             <h3 class="text-center">Escribe el número para adivinar:</h3>
             <div class="input-group my-3">
-                <input type="number" id="numeroIntento" class="form-control" placeholder="Ingresa el número">
-                <button class="btn btn-success" onclick="lanzarIntento()">Lanzar</button>
+                <input type="number" id="Numero" class="form-control" placeholder="Ingresa el número">
+                <button  id = "Lanzar" class="btn btn-primary me-2">Lanzar</button>
             </div>
-            <div id="resultado" class="alert alert-info text-center"></div>
+            <div id="Resultado" class="alert alert-info text-center"></div>
+            <button id ="Reiniciar" class="btn btn-primary me-2">Reiniciar</button>
         </section>
 
-        <!-- Lista de jugadores -->
-        <section class="section">
-            <h2 class="text-center">Jugadores:</h2>
-            <ul id="jugadoresLista" class="list-group"></ul>
-        </section>
+       
+       
     </main>
 
     <footer class="bg-dark text-light text-center py-3">
         <p class="mt-2">© 2024 Adivina El Número. Todos los derechos reservados.</p>
     </footer>
 
-    <script src="javascript/index.js"></script>
+         
+        
+       
+    
 </body>
 </html>
