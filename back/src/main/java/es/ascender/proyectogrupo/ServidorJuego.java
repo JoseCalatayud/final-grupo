@@ -15,25 +15,25 @@ public class ServidorJuego {
     private static Juego juego;
 
     public static void main(String[] args) throws IOException {
-        // Crear servidor HTTP en el puerto 8080
+      
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        // Configurar rutas
+       
         server.createContext("/iniciar", new IniciarJuegoHandler());
         server.createContext("/intento", new RealizarIntentoHandler());
         server.createContext("/info", new ObtenerInformacionHandler());
 
-        // Iniciar el servidor
-        server.setExecutor(null); // Usa un ejecutor por defecto
+        
+        server.setExecutor(null); 
         System.out.println("Servidor iniciado en el puerto 8080...");
         server.start();
     }
 
-    // Handler para iniciar el juego
+    
     static class IniciarJuegoHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); // CORS
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); 
 
             if ("POST".equals(exchange.getRequestMethod())) {
                 Map<String, String> params = parsePostParameters(exchange);
@@ -53,11 +53,11 @@ public class ServidorJuego {
         }
     }
 
-    // Handler para realizar un intento
+    
     static class RealizarIntentoHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); // CORS
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
             if ("POST".equals(exchange.getRequestMethod())) {
                 if (juego == null) {
@@ -79,11 +79,11 @@ public class ServidorJuego {
         }
     }
 
-    // Handler para obtener información del jugador
+    
     static class ObtenerInformacionHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*"); // CORS
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
 
             if ("GET".equals(exchange.getRequestMethod())) {
                 if (juego == null) {
@@ -102,7 +102,7 @@ public class ServidorJuego {
         }
     }
 
-    // Utilidades para manejar parámetros POST
+   
     private static Map<String, String> parsePostParameters(HttpExchange exchange) throws IOException {
         String query = new String(exchange.getRequestBody().readAllBytes());
         Map<String, String> result = new HashMap<>();
@@ -113,7 +113,7 @@ public class ServidorJuego {
         return result;
     }
 
-    // Utilidad para enviar respuestas HTTP
+   
     private static void sendResponse(HttpExchange exchange, String response, int statusCode) throws IOException {
         exchange.sendResponseHeaders(statusCode, response.getBytes().length);
         OutputStream os = exchange.getResponseBody();
