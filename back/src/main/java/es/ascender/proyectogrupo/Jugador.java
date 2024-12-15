@@ -4,6 +4,7 @@ public class Jugador {
 
     private String nombre;
     private int intentos;
+    private int puntuacion;
     
 
     
@@ -24,7 +25,9 @@ public class Jugador {
     public void setIntentos(int intentos) {
         this.intentos = intentos;
     }
-
+    public void setPuntuacion(int puntuacion){
+        this.puntuacion = puntuacion;
+    }
     
     
 }

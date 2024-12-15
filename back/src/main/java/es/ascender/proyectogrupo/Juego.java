@@ -4,72 +4,105 @@ public class Juego {
 
     private int numeroAleatorio;
     private int intentosMax;
+    private int numeroSuperior;
     private Jugador jugador;
 
-    public Juego(int intentosMax, String nombre) {
-        this.numeroAleatorio = (int) (Math.random() * 10);
+    public Juego(int intentosMax, String nombre, int numeroSuperior) {
+        this.numeroAleatorio = (int) (Math.random() * numeroSuperior);
         this.intentosMax = intentosMax;
         this.jugador = new Jugador(nombre);
+        this.numeroSuperior = numeroSuperior;
     }
 
     public Jugador getJugador() {
         return jugador;
     }
 
-    public boolean evaluarIntentos() {
-
-        if (jugador.getIntentos() < intentosMax) {
-            return true;
-        }
-        return false;
+    public int getNumeroAleatorio() {
+        return numeroAleatorio;
     }
 
-    // public String comprobarIntento(int numero) {
-    // String respuesta = "";
-    // jugador.setIntentos(jugador.getIntentos() + 1);
-    // if (evaluarIntentos() && (evaluarNumero(numero) == 1)) {
-    // respuesta = "Es un numero mayor";
-    // } else if (evaluarIntentos() && (evaluarNumero(numero) == 2)) {
-    // respuesta = "Es un numero menor";
-    // } else if (!evaluarIntentos()) {
-    // respuesta = "Has agotado tus intentos";
-    // } else if (evaluarIntentos() && evaluarNumero(numero) == 3) {
-    // respuesta = "Has acertado!!!";
-    // }
-    // return respuesta;
-    // }
+    public int getIntentosMax() {
+        return intentosMax;
+    }
+
+    public void setIntentosMax(int intentosMax) {
+        this.intentosMax = intentosMax;
+    }
+
+    public int getNumeroSuperior() {
+        return numeroSuperior;
+    }
+
+    public void setNumeroSuperior(int numeroSuperior) {
+        this.numeroSuperior = numeroSuperior;
+    }
+
+    public boolean evaluarIntentos() {
+
+        return jugador.getIntentos() <= intentosMax;
+       
+    }
+
     public String comprobarIntento(int numero) {
-        int caso = evaluarNumero(numero);
+        sumarIntento();
         String respuesta = "";
-        switch (caso) {
-            case 1:
-                respuesta = "Es un numero mayor. Llevas "+ jugador.getIntentos() + " intentos";
-            case 2:
-                respuesta = "Es un numero menor";
-            case 3:
-                respuesta = "Enhorabuena, has ganado!!!";
-            case 4:
-                respuesta = "Has agotado tus intentos";
+        if (!esUltimoIntento()) {
+            int caso = evaluarNumero(numero);
+            switch (caso) {
+                case 1:
+                    respuesta = "Es un numero mayor. Llevas " + jugador.getIntentos() + " intentos";
+                    break;
+                case 2:
+                    respuesta = "Es un numero menor. Llevas " + jugador.getIntentos() + " intentos";
+                    break;
+                case 3:
+                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos() + " intentos";
+                    break;
+            }
+        } else if (esUltimoIntento()) {
+            int caso = evaluarNumero(numero);
+            switch (caso) {
+                case 1:
+                    respuesta = "Era un numero mayor. Agotaste los intentos";
+                    break;
+                case 2:
+                    respuesta = "Era un numero menor. Agotaste los intentos";
+                    break;
+                case 3:
+                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos() + " intentos";
+                    break;
+            }
 
         }
         return respuesta;
+    }
+
+    public void sumarIntento() {
+        jugador.setIntentos(jugador.getIntentos() + 1);
+    }
+
+    public boolean esUltimoIntento() {
+        return evaluarIntentos() && jugador.getIntentos() == intentosMax;
     }
 
     public int evaluarNumero(int numero) {
         int respuesta = 0;
-        if (evaluarIntentos()) {
-            if (numeroAleatorio > numero) {
-                respuesta = 1;
-            } else if (numeroAleatorio < numero) {
-                respuesta = 2;
-            } else if (numeroAleatorio == numero) {
-                respuesta = 3;
-            }
-        } else {
-            respuesta = 4;
+        if (numeroAleatorio > numero) {
+            respuesta = 1;
+        } else if (numeroAleatorio < numero) {
+            respuesta = 2;
+        } else if (numeroAleatorio == numero) {
+            respuesta = 3;
         }
         return respuesta;
 
+    }
+
+    public void darPuntuacion() {
+        int valorIntento = (int) intentosMax / 10;
+        int puntuacion = (intentosMax - jugador.getIntentos()) * valorIntento;
+        jugador.setPuntuacion(puntuacion);
     }
 
 }
