@@ -3,23 +3,43 @@ $(document).ready(function () {
     let intentosMaximos = 0;
     const serverUrl = "https://my-json-server.typicode.com/FantasmaMacg/dato/juegos";
     let numeroAdivinar = 0;
+    $('#Lanzar').prop('disabled', true);
+    $('#Slanzar').hide();
+    let RangoDificultad = 0;
 
    
     $('#Iniciar').click(function () {
         nombre = $('#Nombre').val();
-        intentosMaximos = parseInt($('#Intentos').val(), 10);
+        intentosMaximos = parseInt($('#Intentos').val());
+        if (isNaN(intentosMaximos)){
+            $('#Resultado1')
+                .removeClass('alert-info')
+                .addClass('alert-danger')
+                .text('Por favor, ingresa un número.');
+        }
+        else{
+            $('#Lanzar').prop('disabled', false);
+            $('#Slanzar').show();
+            $('#Resultado1').hide();
+
+        }
+        RangoDificultad = parseInt($('#Dificultad').val());
+       
+       
 
      
-        const nuevoJuego = {
+        let nuevoJuego = {
             nombre: nombre,
-            intentosRestantes: intentosMaximos
+            intentosRestantes: intentosMaximos,
+            rangoDificultad: RangoDificultad
+            
         };
 
         $.ajax({
             url: serverUrl,
             type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(nuevoJuego),
+            
+            data: (nuevoJuego),
             success: function (response) {
                 
                 numeroAdivinar = response.numeroAdivinar;
@@ -62,6 +82,7 @@ $(document).ready(function () {
                 if (numero === numeroAdivinar) {
                     mensaje = '¡Felicidades! Has adivinado el número.';
                     $('#Resultado').removeClass('alert-danger').addClass('alert-info');
+                    $('#Lanzar').prop('disabled', true);
                 } else if (numero < numeroAdivinar) {
                     mensaje = 'El número es mayor.';
                     $('#Resultado').removeClass('alert-info').addClass('alert-warning');
