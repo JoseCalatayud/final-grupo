@@ -6,6 +6,11 @@ $(document).ready(function () {
     $('#Lanzar').prop('disabled', true);
     $('#Slanzar').hide();
     let RangoDificultad = 0;
+    $('#Numero').val('');
+    $('#Nombre').val('');
+    $('#Intentos').val('');
+    $('#Dificultad').val('Dificultad');
+
 
    
     $('#Iniciar').click(function () {
@@ -84,9 +89,11 @@ $(document).ready(function () {
                     $('#Resultado').removeClass('alert-danger').addClass('alert-info');
                     $('#Lanzar').prop('disabled', true);
                 } else if (numero < numeroAdivinar) {
+                    $('#Numero').val('');
                     mensaje = 'El número es mayor.';
                     $('#Resultado').removeClass('alert-info').addClass('alert-warning');
                 } else if (numero > numeroAdivinar) {
+                    $('#Numero').val('');
                     mensaje = 'El número es menor.';
                     $('#Resultado').removeClass('alert-info').addClass('alert-warning');
                 }
@@ -120,7 +127,9 @@ $(document).ready(function () {
                     .addClass('alert-info')
                     .text('Juego reiniciado');
                 $('#Lanzar').prop('disabled', false);
-                $('#Numero').val('');
+                $('#Nombre').val('');
+                $('#Intentos').val('');
+                $('#Dificultad').val('Dificultad');
             },
             error: function () {
                 $('#Resultado')
