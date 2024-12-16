@@ -93,10 +93,19 @@ public class Juego {
 
     }
 
-    public void darPuntuacion() {
-        int valorIntento = (int) intentosMax / 10;
-        int puntuacion = (intentosMax - jugador.getIntentos()) * valorIntento;
-        jugador.setPuntuacion(puntuacion);
+    public double darPuntuacion(int intentosCorrectos) {
+        if (jugador == null || intentosMax <= 0) {
+            throw new IllegalStateException("El jugador no es atraido o la intentosMax es incorrecta.");
+        }
+    
+        if (intentosCorrectos < 0 || intentosCorrectos > intentosMax) {
+            throw new IllegalArgumentException("El numero de parcelas correctas debe ser del orden de 0 a intentosMax.");       
+        }
+
+        double porcentaje = (intentosCorrectos / (double) intentosMax) * 100;
+
+        jugador.setPuntuacion((int) porcentaje);
+        return porcentaje;
     }
 
 }
