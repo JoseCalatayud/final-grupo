@@ -30,7 +30,7 @@ public class App {
                             sc.next();
                         }
                         numeroSuperior = sc.nextInt();
-                    } while (numeroSuperior <= 0);
+                    } while (numeroSuperior < 0);
 
                     int intentosMax;
                     do {
@@ -40,7 +40,7 @@ public class App {
                             sc.next();
                         }
                         intentosMax = sc.nextInt();
-                    } while (intentosMax <= 0);
+                    } while (intentosMax < 0);
 
                     Juego juego = new Juego(intentosMax, nombre, numeroSuperior);
 
