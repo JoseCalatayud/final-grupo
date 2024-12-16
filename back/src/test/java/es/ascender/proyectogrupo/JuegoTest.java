@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class JuegoTest {
     private Juego juego;
-    private Jugador jugador;
+    
 
 
     
@@ -58,19 +58,19 @@ public class JuegoTest {
     @Test 
     void testComprobarIntento(){
         int numeroSolucion = juego.getNumeroAleatorio();
-        assertEquals("Es un numero mayor. Llevas 1 intentos", juego.comprobarIntento(numeroSolucion-1));
-        assertEquals("Es un numero menor. Llevas 2 intentos", juego.comprobarIntento(numeroSolucion+11));
-        assertEquals("Enhorabuena, has ganado!!! Lo conseguiste en 3 intentos", juego.comprobarIntento(numeroSolucion));
+        assertEquals("Es un numero mayor. Te quedan 4 intentos", juego.comprobarIntento(numeroSolucion-1));
+        assertEquals("Es un numero menor. Te quedan 3 intentos", juego.comprobarIntento(numeroSolucion+11));
+        assertEquals("Enhorabuena, has ganado!!! Lo conseguiste en " + (juego.getJugador().getIntentos() + 1 ) + " intentos. Tu puntuación es 60 puntos.", juego.comprobarIntento(numeroSolucion));
     }
     @Test 
     void testComprobarIntentoUltimoIntento(){
         int numeroSolucion = juego.getNumeroAleatorio();
         juego.getJugador().setIntentos(4);
-        assertEquals("Era un numero mayor. Agotaste los intentos", juego.comprobarIntento(numeroSolucion-1));
+        assertEquals("Era un numero mayor. Agotaste los intentos. ", juego.comprobarIntento(numeroSolucion-1));
         juego.getJugador().setIntentos(4);
         assertEquals("Era un numero menor. Agotaste los intentos", juego.comprobarIntento(numeroSolucion+1));
         juego.getJugador().setIntentos(4);
-        assertEquals("Enhorabuena, has ganado!!! Lo conseguiste en "+ juego.getIntentosMax()+ " intentos", juego.comprobarIntento(numeroSolucion));
+        assertEquals("Enhorabuena, has ganado!!! Lo conseguiste en " + (juego.getJugador().getIntentos() + 1 ) + " intentos. Tu puntuación es 20 puntos.", juego.comprobarIntento(numeroSolucion));
     }
     @Test
     void testContarIntentos(){
@@ -127,24 +127,24 @@ public class JuegoTest {
     void testDarPuntuacion_50Porcentajes() {
         juego.setIntentosMax(10); //5 intentos con exito de 10
         double resultado = juego.darPuntuacion(5);
-        assertEquals(50.0, resultado, 0.01, "El porcentaje debe ser 50.0%");
-        assertEquals(50, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 50");
+        assertEquals(60.0, resultado, 0.01, "El porcentaje debe ser 50.0%");
+        assertEquals(60, juego.getJugador().getPuntuacion(), "La puntuacion de los jugadores debe ser del 60");
     }
 
     @Test
     void testDarPuntuacion_100Porcentajes() {
         juego.setIntentosMax(10); 
-        double resultado = juego.darPuntuacion(10); //10 intentos con exito de 10
+        double resultado = juego.darPuntuacion(9); //10 intentos con exito de 10
         assertEquals(100.0, resultado, 0.01, "El porcentaje debe ser 100.0%");
-        assertEquals(100, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 100");
+        assertEquals(100, juego.getJugador().getPuntuacion(), "La puntuacion de los jugadores debe ser del 100");
     }
 
     @Test
     void testDarPuntuacion_0Porcentajes() {
         juego.setIntentosMax(10); 
         double resultado = juego.darPuntuacion(0); //0 intentos con exito de 10
-        assertEquals(0.0, resultado, 0.01, "El porcentaje debe ser 0.0%");
-        assertEquals(0, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 0");
+        assertEquals(10.0, resultado, 0.01, "El porcentaje debe ser 10.0%");
+        assertEquals(10, juego.getJugador().getPuntuacion(), "La puntuacion de los jugadores debe ser del 0");
     }
 
     @Test

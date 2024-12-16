@@ -40,35 +40,42 @@ public class Juego {
 
     public String comprobarIntento(int numero) {
         sumarIntento();
+        darPuntuacion(darIntentosRestanten());
         String respuesta = "";
         if (!esUltimoIntento()) {
             int caso = evaluarNumero(numero);
             switch (caso) {
                 case 1:
-                    respuesta = "Es un numero mayor. Llevas " + jugador.getIntentos() + " intentos";
+                    respuesta = "Es un numero mayor. Te quedan " + darIntentosRestanten() + " intentos";
                     break;
                 case 2:
-                    respuesta = "Es un numero menor. Llevas " + jugador.getIntentos() + " intentos";
+                    respuesta = "Es un numero menor. Te quedan " + darIntentosRestanten() + " intentos";
                     break;
                 case 3:
-                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos() + " intentos";
+
+                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos()
+                            + " intentos. Tu puntuación es " + jugador.getPuntuacion() +" puntos.";
                     break;
             }
         } else if (esUltimoIntento()) {
             int caso = evaluarNumero(numero);
             switch (caso) {
                 case 1:
-                    respuesta = "Era un numero mayor. Agotaste los intentos";
+                    jugador.setPuntuacion(0);
+                    respuesta = "Era un numero mayor. Agotaste los intentos. ";
                     break;
                 case 2:
+                    jugador.setPuntuacion(0);
                     respuesta = "Era un numero menor. Agotaste los intentos";
                     break;
                 case 3:
-                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos() + " intentos";
+                    respuesta = "Enhorabuena, has ganado!!! Lo conseguiste en " + jugador.getIntentos() + " intentos. Tu puntuación es "+jugador.getPuntuacion()+" puntos.";
+
                     break;
             }
 
         }
+
         return respuesta;
     }
 
@@ -93,19 +100,24 @@ public class Juego {
 
     }
 
-    public double darPuntuacion(int intentosCorrectos) {
+    public double darPuntuacion(int intentosRestantes) {
         if (jugador == null || intentosMax <= 0) {
             throw new IllegalStateException("El jugador no es atraido o la intentosMax es incorrecta.");
         }
-    
-        if (intentosCorrectos < 0 || intentosCorrectos > intentosMax) {
-            throw new IllegalArgumentException("El numero de parcelas correctas debe ser del orden de 0 a intentosMax.");       
+
+        if (intentosRestantes < 0 || intentosRestantes > intentosMax) {
+            throw new IllegalArgumentException(
+                    "El numero de parcelas correctas debe ser del orden de 0 a intentosMax.");
         }
 
-        double porcentaje = (intentosCorrectos / (double) intentosMax) * 100;
+        double porcentaje = ((intentosRestantes + 1) / (double) ((intentosMax)) * 100);
 
         jugador.setPuntuacion((int) porcentaje);
         return porcentaje;
+    }
+
+    public int darIntentosRestanten() {
+        return intentosMax - jugador.getIntentos();
     }
 
 }
