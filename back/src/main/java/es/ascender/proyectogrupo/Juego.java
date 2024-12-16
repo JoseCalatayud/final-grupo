@@ -38,12 +38,6 @@ public class Juego {
         this.numeroSuperior = numeroSuperior;
     }
 
-    public boolean evaluarIntentos() {
-
-        return jugador.getIntentos() <= intentosMax;
-       
-    }
-
     public String comprobarIntento(int numero) {
         sumarIntento();
         String respuesta = "";
@@ -83,7 +77,7 @@ public class Juego {
     }
 
     public boolean esUltimoIntento() {
-        return evaluarIntentos() && jugador.getIntentos() == intentosMax;
+        return jugador.getIntentos() == intentosMax;
     }
 
     public int evaluarNumero(int numero) {

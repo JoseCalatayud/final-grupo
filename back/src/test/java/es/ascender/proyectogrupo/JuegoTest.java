@@ -51,14 +51,6 @@ public class JuegoTest {
         
     }
 
-    @Test
-    void testEvaluarIntentos() {
-        juego.getJugador().setIntentos(6);
-        assertFalse(juego.evaluarIntentos());
-        juego.getJugador().setIntentos(2);
-        assertTrue(juego.evaluarIntentos());
-        
-    }
     @Test 
     void testComprobarIntento(){
         int numeroSolucion = juego.getNumeroAleatorio();
@@ -99,12 +91,17 @@ public class JuegoTest {
         assertEquals(6,juego.getJugador().getIntentos());
     }
 
-    
+    @Test 
+    void testEsUltimoIntento() {
+        Jugador jugador = juego.getJugador();
+        jugador.setIntentos(5);
+        assertEquals(juego.esUltimoIntento(), true);
+    }
 
-
-
-    
-
-
-
+    @Test 
+    void testNoEsUltimoIntento() {
+        Jugador jugador = juego.getJugador();
+        jugador.setIntentos(4);
+        assertEquals(juego.esUltimoIntento(), false);
+    }
 }
