@@ -1,6 +1,7 @@
 package es.ascender.proyectogrupo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -8,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 public class JuegoTest {
     private Juego juego;
+    private Jugador jugador;
+
+
     
 
     @BeforeEach
@@ -104,4 +108,49 @@ public class JuegoTest {
         jugador.setIntentos(4);
         assertEquals(juego.esUltimoIntento(), false);
     }
+
+    @Test
+    void testSetIntentosMax() {
+        int intentos = 10;
+        juego.setIntentosMax(intentos);
+        assertEquals(intentos, juego.getIntentosMax());
+    }
+
+    @Test
+    void testGetNumeroSuperior() {
+        int numeroSuperior = 100;
+        juego.setNumeroSuperior(numeroSuperior);
+        assertEquals(numeroSuperior, juego.getNumeroSuperior());
+    }
+
+    @Test
+    void testDarPuntuacion_50Porcentajes() {
+        juego.setIntentosMax(10); //5 intentos con exito de 10
+        double resultado = juego.darPuntuacion(5);
+        assertEquals(50.0, resultado, 0.01, "El porcentaje debe ser 50.0%");
+        assertEquals(50, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 50");
+    }
+
+    @Test
+    void testDarPuntuacion_100Porcentajes() {
+        juego.setIntentosMax(10); 
+        double resultado = juego.darPuntuacion(10); //10 intentos con exito de 10
+        assertEquals(100.0, resultado, 0.01, "El porcentaje debe ser 100.0%");
+        assertEquals(100, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 100");
+    }
+
+    @Test
+    void testDarPuntuacion_0Porcentajes() {
+        juego.setIntentosMax(10); 
+        double resultado = juego.darPuntuacion(0); //0 intentos con exito de 10
+        assertEquals(0.0, resultado, 0.01, "El porcentaje debe ser 0.0%");
+        assertEquals(0, jugador.getPuntuacion(), "La puntuacion de los jugadores debe ser del 0");
+    }
+
+    @Test
+    void testDarPuntuacion_DatosIncorrectos() {
+        juego.setIntentosMax(10); 
+        assertThrows(IllegalArgumentException.class, () -> juego.darPuntuacion(12), "Deberia lanzar una excepcion si los intentos exitosos exceden el intentosNax");
+    }
+
 }

@@ -6,6 +6,9 @@ public class Jugador {
     private int intentos;
     private int puntuacion;
     
+    public int getPuntuacion() {
+        return puntuacion;
+    }
 
     
 
