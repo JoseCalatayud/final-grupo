@@ -1,7 +1,7 @@
 package es.ascender.proyectogrupo;
 
 import java.util.Scanner;
-
+//e
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class App {
             sc.nextLine();
             switch (opcion) {
                 case 1:
-                    String nombre;
+                    String nombre; 
 
                     do {
                         System.out.println("Introduzca su nombre");
