@@ -5,7 +5,7 @@ $(document).ready(function () {
     let numeroAdivinar = 0;
     $('#Lanzar').prop('disabled', true);
     $('#Slanzar').hide();
-    let RangoDificultad = 0;
+    let RangoDificultad = 10;
     $('#Numero').val('');
     $('#Nombre').val('');
     $('#Intentos').val('');
@@ -26,9 +26,10 @@ $(document).ready(function () {
             $('#Lanzar').prop('disabled', false);
             $('#Slanzar').show();
             $('#Resultado1').hide();
+            RangoDificultad = parseInt($('#Dificultad').val());
 
         }
-        RangoDificultad = parseInt($('#Dificultad').val());
+        
        
        
 
@@ -46,13 +47,16 @@ $(document).ready(function () {
             
             data: (nuevoJuego),
             success: function (response) {
-                
+                $('#jugador')
+                    
+                    .text(`Jugador ${response.nombre}`);
                 numeroAdivinar = response.numeroAdivinar;
 
                 $('#Resultado')
                     .removeClass('alert-danger')
                     .addClass('alert-info')
                     .text(`Juego iniciado con éxito. ¡Intenta adivinar el número! Te quedan ${response.intentosRestantes} intentos.`);
+                   
             },
             error: function () {
                 $('#Resultado')
@@ -129,7 +133,7 @@ $(document).ready(function () {
                 $('#Lanzar').prop('disabled', false);
                 $('#Nombre').val('');
                 $('#Intentos').val('');
-                $('#Dificultad').val('Dificultad');
+                 $('#Dificultad').val('');
             },
             error: function () {
                 $('#Resultado')
